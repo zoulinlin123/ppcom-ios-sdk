@@ -153,8 +153,24 @@ NSString* PPFileUrl(NSString *fileId) {
 }
 
 - (NSString*) getDeviceUUID {
-    NSString *deviceUUID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    return deviceUUID;
+    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+    NSString *identifierForVendorKey = @"pp_identifier";
+    NSString *uniqueIdentifier = nil;
+    // Find from disk
+    if ([preferences objectForKey:identifierForVendorKey] == nil) {
+        
+        uniqueIdentifier = [UIDevice currentDevice].identifierForVendor.UUIDString;
+        PPFastLog(@"===New unique identifier:%@===", uniqueIdentifier);
+        
+        // Write to disk
+        [preferences setObject:uniqueIdentifier forKey:identifierForVendorKey];
+        [preferences synchronize];
+        
+    } else {
+        uniqueIdentifier = [preferences objectForKey:identifierForVendorKey];
+        PPFastLog(@"===Use cached unique identifier:%@===", uniqueIdentifier);
+    }
+    return uniqueIdentifier;
 }
 
 - (NSString*) getRandomUUID {
