@@ -9,17 +9,18 @@
 #import <UIKit/UIDevice.h>
 #import "PPComUtils.h"
 #import "NSString+Crypto.h"
-
+#import "PPFastLog.h"
+#define PP_LOCAL_DEBUG
 #ifdef PP_LOCAL_DEBUG
 
-NSString *const PPApiHost = @"http://192.168.0.206:8080/api";
-NSString *const PPFileHost = @"http://192.168.0.206:8080/download/";
-NSString *const PPWebSocketHost = @"ws://192.168.0.206:8080/pcsocket/WS";
-NSString *const PPFileUploadHost = @"http://192.168.0.206:8080/upload";
-NSString *const PPTxtUploadHost = @"http://192.168.0.206:8080/upload";
-NSString *const PPAuthHost = @"http://192.168.0.206:8080/ppauth";
-NSString *const PPApiKey = @"M2IzMzVjNTAzZTIyYjJkZGQ2YmMxODFjN2E1ZGExMGQyNDY1MDc5NA==";
-NSString *const PPApiSecret = @"NjYwMTU5MzYzMTg0NGVjZGU5YmYyZWM3OWYwMWNmNGM3YWJmOWYyMg==";
+NSString *const PPApiHost = @"http://10.1.127.148:8945/api";
+NSString *const PPFileHost = @"http://10.1.127.148:8945/download/";
+NSString *const PPWebSocketHost = @"ws://10.1.127.148:8945/pcsocket/WS";
+NSString *const PPFileUploadHost = @"http://10.1.127.148:8945/upload";
+NSString *const PPTxtUploadHost = @"http://10.1.127.148:8945/upload";
+NSString *const PPAuthHost = @"http://10.1.127.148:8945/ppauth";
+NSString *const PPApiKey = @"Y2VmZTUwMjcwODNjNzcyNWIxZWJjNjI5NmRjNDBjYTA0ZGQ5ZTFjNQ==";
+NSString *const PPApiSecret = @"NjI1MzU0OWFlZjUwYWRjZTkxNzYyM2Y3YWU0MzhiZWFjZDQwMTI1Mw==";
 
 #else
 

@@ -432,7 +432,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yvertical.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "96083d83-ddea-45cf-bc8a-eee158f31e46";
 			};
 			name = Debug;
 		};
@@ -456,7 +456,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yvertical.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "96083d83-ddea-45cf-bc8a-eee158f31e46";
 			};
 			name = Release;
 		};

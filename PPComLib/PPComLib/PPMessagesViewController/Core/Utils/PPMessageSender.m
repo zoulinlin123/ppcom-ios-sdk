@@ -82,29 +82,46 @@
 
 -(void)sendTxtMessage:(NSMutableDictionary *)basicParams message:(PPMessage *)message complectionHandler:(void (^)(NSError *, NSDictionary *))handler {
     [self.client.uploader uploadTxt:message.text withDelegate:^(NSError *error, NSDictionary *response) {
-            if (!error) {
-                //TODO delete local txt file
-                NSString *fid = response[@"fuuid"];
-                NSDictionary *fidParams = @{@"fid":fid};
-            
-                basicParams[@"message_body"] = [self.client.utils dictionaryToJsonString:fidParams];
-            
-                [self.client.api sendMessage:basicParams completionHandler:^(NSDictionary *response, NSError *error) {
+        if (!error) {
+            //TODO delete local txt file
+            NSString *fid = response[@"fuuid"];
+            NSDictionary *fidParams = @{@"fid":fid};
+        
+            basicParams[@"message_body"] = [self.client.utils dictionaryToJsonString:fidParams];
+        
+            [self.client.api sendMessage:basicParams completionHandler:^(NSDictionary *response, NSError *error) {
 
-                        if ( response ) {
-                            [self onSendMessageComplected:message response:response];
-                        }
-                    
-                        if (handler) {
-                            handler(error, response);
-                        }
-                    }];
-            }
-        }];
+                    if ( response ) {
+                        [self onSendMessageComplected:message response:response];
+                    }
+                
+                    if (handler) {
+                        handler(error, response);
+                    }
+                }];
+        }
+    }];
 }
 
 -(void)sendImageMessage:(NSMutableDictionary *)basicParams message:(PPMessage *)message complectionHandler:(void (^)(NSError *, NSDictionary *))handler {
-    
+    [self.client.uploader uploadFile:nil withDelegate:^(NSError *error, NSDictionary *response) {
+        //TODO delete local txt file
+        NSString *fid = response[@"fuuid"];
+        NSDictionary *fidParams = @{@"fid":fid};
+        
+        basicParams[@"message_body"] = [self.client.utils dictionaryToJsonString:fidParams];
+        
+        [self.client.api sendMessage:basicParams completionHandler:^(NSDictionary *response, NSError *error) {
+            
+            if ( response ) {
+                [self onSendMessageComplected:message response:response];
+            }
+            
+            if (handler) {
+                handler(error, response);
+            }
+        }];
+    }];
 }
 
 #pragma mark - Private Methods

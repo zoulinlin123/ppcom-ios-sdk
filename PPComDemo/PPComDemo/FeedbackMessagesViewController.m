@@ -8,8 +8,8 @@
 
 #import "FeedbackMessagesViewController.h"
 
-#define APP_UUID @"b6000733-06b6-11e6-8cc6-acbc327f19e9";
-#define USER_EMAIL @"somebody.web@yvertical.com.aa"
+#define APP_UUID @"604f3438-39d1-11e6-b48e-c82a1426f133";
+#define USER_EMAIL @"55118222@qq.com"
 
 @interface FeedbackMessagesViewController ()
 
