@@ -12,6 +12,7 @@
 #import "PPComUtils.h"
 #import "PPDataCache.h"
 #import "PPAppInfo.h"
+#import "PPPhotoMediaItem.h"
 
 #import "PPStoreManager.h"
 #import "PPMessagesStore.h"
@@ -22,6 +23,7 @@
 @interface PPMessageSender ()
 
 @property PPCom *client;
+
 
 -(NSMutableDictionary*)getBasicMessageParams:(PPMessage*)message;
 
@@ -69,28 +71,25 @@
 -(void)sendTextMessage:(NSMutableDictionary *)basicParams message:(PPMessage *)message complectionHandler:(void (^)(NSError *, NSDictionary *))handler {
     basicParams[@"message_body"] = message.text;
     [self.client.api sendMessage:basicParams completionHandler:^(NSDictionary *response, NSError *error) {
-
-            if ( response ) {
-                [self onSendMessageComplected:message response:response];
-            }
-            
-            if (handler) {
-                handler(error, response);
-            }
-        }];
+        if (response) {
+            [self onSendMessageComplected:message response:response];
+        }
+        
+        if (handler) {
+            handler(error, response);
+        }
+    }];
 }
 
 -(void)sendTxtMessage:(NSMutableDictionary *)basicParams message:(PPMessage *)message complectionHandler:(void (^)(NSError *, NSDictionary *))handler {
-    [self.client.uploader uploadTxt:message.text withDelegate:^(NSError *error, NSDictionary *response) {
+    [self.client.uploader uploadTxt:message.text fromUserId:self.client.user.uuid withDelegate:^(NSError *error, NSDictionary *response) {
         if (!error) {
             //TODO delete local txt file
             NSString *fid = response[@"fuuid"];
             NSDictionary *fidParams = @{@"fid":fid};
-        
             basicParams[@"message_body"] = [self.client.utils dictionaryToJsonString:fidParams];
         
             [self.client.api sendMessage:basicParams completionHandler:^(NSDictionary *response, NSError *error) {
-
                     if ( response ) {
                         [self onSendMessageComplected:message response:response];
                     }
@@ -104,16 +103,20 @@
 }
 
 -(void)sendImageMessage:(NSMutableDictionary *)basicParams message:(PPMessage *)message complectionHandler:(void (^)(NSError *, NSDictionary *))handler {
-    [self.client.uploader uploadFile:nil withDelegate:^(NSError *error, NSDictionary *response) {
+    PPPhotoMediaItem* imageItem = (PPPhotoMediaItem*)message.media;
+    [self.client.uploader uploadFile:imageItem.fid fromUserId:self.client.user.uuid withDelegate:^(NSError *error, NSDictionary *response) {
+        if (response == nil) {
+            return;
+        }
         //TODO delete local txt file
         NSString *fid = response[@"fuuid"];
-        NSDictionary *fidParams = @{@"fid":fid};
+        imageItem.fid=fid;
+        NSDictionary *fidParams = @{@"fid":fid,
+                                    @"mime":@"image/jpeg"};
         
         basicParams[@"message_body"] = [self.client.utils dictionaryToJsonString:fidParams];
-        
         [self.client.api sendMessage:basicParams completionHandler:^(NSDictionary *response, NSError *error) {
-            
-            if ( response ) {
+            if (response) {
                 [self onSendMessageComplected:message response:response];
             }
             

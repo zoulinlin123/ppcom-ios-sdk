@@ -42,6 +42,8 @@ extern NSString *const PPVersionString;
  */
 - (void)setInputViewPlaceHolder:(NSString *)hintText;
 
+- (void)sendImage:(UIImage*)image;
+
 /** controller delegate **/
 @property (nonatomic, weak) id<PPMessagesViewControllerDelegate> delegate;
 

@@ -23,6 +23,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		185E25691D24EC87009F5286 /* PPFormData.h in Headers */ = {isa = PBXBuildFile; fileRef = 185E25671D24EC87009F5286 /* PPFormData.h */; };
+		185E256A1D24EC87009F5286 /* PPFormData.m in Sources */ = {isa = PBXBuildFile; fileRef = 185E25681D24EC87009F5286 /* PPFormData.m */; };
+		189068C01D23C1A70066A13D /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 189068BF1D23C1A70066A13D /* AssetsLibrary.framework */; };
+		189068C21D23DCC50066A13D /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 189068C11D23DCC50066A13D /* Photos.framework */; };
 		3541B9081C2CE0FE005134AB /* JSQMessagesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3541B9071C2CE0FE005134AB /* JSQMessagesViewController.xib */; };
 		3541B9121C2CE85E005134AB /* JSQMessagesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3541B9071C2CE0FE005134AB /* JSQMessagesViewController.xib */; };
 		3541F9381BCDEE74000940EA /* JSQMessages.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3541F9341BCDEE16000940EA /* JSQMessages.strings */; };
@@ -344,6 +348,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		185E25671D24EC87009F5286 /* PPFormData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFormData.h; sourceTree = "<group>"; };
+		185E25681D24EC87009F5286 /* PPFormData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFormData.m; sourceTree = "<group>"; };
+		189068BF1D23C1A70066A13D /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		189068C11D23DCC50066A13D /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		3541B9071C2CE0FE005134AB /* JSQMessagesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQMessagesViewController.xib; sourceTree = "<group>"; };
 		3541F9331BCDEE16000940EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/JSQMessages.strings; sourceTree = "<group>"; };
 		3541F9351BCDEE1C000940EA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/JSQMessages.strings; sourceTree = "<group>"; };
@@ -639,6 +647,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				189068C21D23DCC50066A13D /* Photos.framework in Frameworks */,
+				189068C01D23C1A70066A13D /* AssetsLibrary.framework in Frameworks */,
 				3541FA0A1BCE0AAA000940EA /* MobileCoreServices.framework in Frameworks */,
 				3567AFAF1BCB9DA30053843C /* CFNetwork.framework in Frameworks */,
 				3567AFAD1BCB9D9E0053843C /* Security.framework in Frameworks */,
@@ -729,6 +739,8 @@
 		3567AF891BCB9D860053843C = {
 			isa = PBXGroup;
 			children = (
+				189068C11D23DCC50066A13D /* Photos.framework */,
+				189068BF1D23C1A70066A13D /* AssetsLibrary.framework */,
 				3541FA091BCE0AAA000940EA /* MobileCoreServices.framework */,
 				3567AFAE1BCB9DA30053843C /* CFNetwork.framework */,
 				3567AFAC1BCB9D9E0053843C /* Security.framework */,
@@ -1014,6 +1026,8 @@
 				EDAC3D391CAD05E400BA1066 /* PPComToken.m */,
 				EDB5907B1CAE271900017E7C /* PPImageDownloaderManager.h */,
 				EDB5907C1CAE271900017E7C /* PPImageDownloaderManager.m */,
+				185E25671D24EC87009F5286 /* PPFormData.h */,
+				185E25681D24EC87009F5286 /* PPFormData.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1262,6 +1276,7 @@
 				EDA272981CBF7B860038E2B8 /* PPGroupMembersViewController.h in Headers */,
 				3567B0871BCB9DF60053843C /* JSQMessages.h in Headers */,
 				3567B0CD1BCB9DF90053843C /* PPCom.h in Headers */,
+				185E25691D24EC87009F5286 /* PPFormData.h in Headers */,
 				3567B0CB1BCB9DF80053843C /* PP.h in Headers */,
 				ED1980101CD9BD1F00C72D3C /* PPLoadingView.h in Headers */,
 				3567AFB31BCB9DD90053843C /* PPComLib.h in Headers */,
@@ -1656,6 +1671,7 @@
 				EDA272991CBF7B860038E2B8 /* PPGroupMembersViewController.m in Sources */,
 				3567B0FA1BCB9DFC0053843C /* PPMessage.m in Sources */,
 				3567B0FD1BCB9DFC0053843C /* PPMessageList.m in Sources */,
+				185E256A1D24EC87009F5286 /* PPFormData.m in Sources */,
 				EDB590751CAE20B100017E7C /* PPConversationItemDataSource.m in Sources */,
 				3567B06E1BCB9DF50053843C /* NSBundle+JSQMessages.m in Sources */,
 				3567B0CC1BCB9DF90053843C /* PP.m in Sources */,

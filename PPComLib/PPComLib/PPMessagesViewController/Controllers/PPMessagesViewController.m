@@ -41,7 +41,7 @@ NSString *const PPVersionString = @"0.0.2";
 #define MESSAGE_PAGE_SIZE @20
 #define TIMESTAMP_DELAY @5 // 5 * 60 s => 5 mins
 
-@interface PPMessagesViewController () <UIActionSheetDelegate, PPComMessageDelegate, PPComInitializeDelegate>
+@interface PPMessagesViewController () <UIActionSheetDelegate, PPComMessageDelegate, PPComInitializeDelegate, PPImageImageSenderInterface>
 
 @property NSString *conversationId;
 @property PPCom *client;
@@ -54,6 +54,7 @@ NSString *const PPVersionString = @"0.0.2";
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
 
 @property (nonatomic) PPMessagesStore *messagesStore;
+@property (nonatomic, strong) PPImagePickerDelegate* imagePickerDelegate;
 
 @property (nonatomic) UIBarButtonItem *groupButtonItem;
 @property (nonatomic) UIBarButtonItem *activityIndicatorButtonItem;
@@ -126,7 +127,6 @@ NSString *const PPVersionString = @"0.0.2";
             [self.senderId isEqual:unknownUserId]) { // `init` failed
             
             [self onSendMessageError:message withError:error];
-            
         }
     }];
 }
@@ -192,7 +192,7 @@ NSString *const PPVersionString = @"0.0.2";
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
     
     //hide left bar button, so can not send photo current
-    self.inputToolbar.contentView.leftBarButtonItem = nil;
+    //self.inputToolbar.contentView.leftBarButtonItem = nil;
 }
 
 - (void)closePressed:(UIBarButtonItem *)sender
@@ -330,6 +330,33 @@ NSString *const PPVersionString = @"0.0.2";
     [self sendMessage:textMessage];
 }
 
+-(void)sendImage:(UIImage*)image {
+    //JEPG格式
+    NSData *imagedata=UIImageJPEGRepresentation(image,1.0);
+    
+    NSArray*paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *documentsDirectory=[paths objectAtIndex:0];
+    
+    NSString *savedImagePath=[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.png",[[NSDate date] timeIntervalSince1970]]];
+    
+    [imagedata writeToFile:savedImagePath atomically:YES];
+    //首先在界面上显示出来消息
+    PPMessage *imageMessage = [PPMessage messageWithClient:self.client conversationId:self.conversationId imageFile:savedImagePath];
+    [self.messagesStore updateWithNewMessage:imageMessage];
+    
+    PPMessageList *messageList = [self.messagesStore messagesInCovnersation:self.conversationId autoCreate:YES];
+    self.jsqMessageArray = messageList.jsqMessageArray;
+    self.ppMessageArray = messageList.ppMessageArray;
+    
+    [self finishSendingMessageAnimated:YES];
+    
+    //发送消息
+    [self sendMessage:imageMessage];
+
+}
+
+
+
 - (void)didPressAccessoryButton:(UIButton *)sender
 {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
@@ -453,6 +480,11 @@ NSString *const PPVersionString = @"0.0.2";
     }
     
     PPPhotoMediaItem *ppPhotoMediaItem = (PPPhotoMediaItem*)ppMessage.media;
+//    if (ppPhotoMediaItem.fid != nil) {
+//        mediaItem.image= [UIImage imageWithContentsOfFile:ppPhotoMediaItem.fid];
+//        [self.collectionView reloadData];
+//        return;
+//    }
     
     ImageDownloader *downloader = self.imageDownloadsInProgress[indexPath];
     if (downloader == nil) {
@@ -495,8 +527,12 @@ NSString *const PPVersionString = @"0.0.2";
     
     switch (buttonIndex) {
     case 0:{
-        PPImagePickerDelegate *delegate = [[PPImagePickerDelegate alloc] init];
-        [self startMediaBrowserFromViewController:[self navigationController] usingDelegate:delegate];
+        if (self.imagePickerDelegate == nil) {
+            self.imagePickerDelegate= [[PPImagePickerDelegate alloc] init];
+            self.imagePickerDelegate.imageSender=self;
+        }
+    
+        [self startMediaBrowserFromViewController:[self navigationController] usingDelegate:self.imagePickerDelegate];
         break;
     }
     case 1:{

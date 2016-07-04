@@ -50,6 +50,12 @@ FOUNDATION_EXPORT NSString *const PPMessageApiTypeAudio;
  */
 + (instancetype)messageWithClient:(PPCom*)client conversationId:(NSString*)conversationId text:(NSString*)text;
 
+
+/**
+ * 根据client，conversationId和image来创建一个图片的PPMessage，日期默认为当前
+ */
++ (instancetype)messageWithClient:(PPCom*)client conversationId:(NSString*)conversationId imageFile:(NSString*)filePath;
+
 /**
  * 获取`message`的简要信息
  */

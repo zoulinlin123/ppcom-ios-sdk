@@ -15,11 +15,17 @@
 /**
  * upload large txt to server
  */
--(void)uploadTxt:(NSString*)text withDelegate:(void(^)(NSError *error, NSDictionary *response))delegate;
+-(void)uploadTxt:(NSString*)text fromUserId:(NSString*)userUuid withDelegate:(void(^)(NSError *error, NSDictionary *response))delegate;
 
 /**
  * upload file to server
  */
--(void)uploadFile:(NSString*)fileUrl withDelegate:(void(^)(NSError *error, NSDictionary *response))delegate;
+-(void)uploadFile:(NSString*)fileUrl fromUserId:(NSString*)userUuid withDelegate:(void(^)(NSError *error, NSDictionary *response))delegate;
+
+
+/**
+ * upload image to server
+ */
+-(void)uploadImageData:(NSData *)data name:(NSString*)fileName fromUserId:(NSString*)userUuid  withDelegate:(void (^)(NSError *, NSDictionary *))delegate;
 
 @end

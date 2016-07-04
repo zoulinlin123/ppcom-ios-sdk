@@ -9,4 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @protocol PPMessageMediaData <NSObject>
+
 @end

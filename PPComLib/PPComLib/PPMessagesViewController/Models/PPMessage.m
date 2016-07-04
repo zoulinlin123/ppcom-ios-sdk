@@ -60,6 +60,10 @@ NSString *const PPMessageApiTypeAudio = @"AUDIO";
     return [[self alloc] initWithClient:client conversationId:conversationId text:text];
 }
 
++ (instancetype)messageWithClient:(PPCom*)client conversationId:(NSString*)conversationId imageFile:(NSString*)filePath {
+    return [[self alloc] initWithClient:client conversationId:conversationId imageFile:filePath];
+}
+
 + (NSString*)summaryInMessage:(PPMessage *)message {
     if ([message.type isEqualToString:PPMessageApiTypeText]) {
         return message.text;
@@ -129,33 +133,43 @@ NSString *const PPMessageApiTypeAudio = @"AUDIO";
 - (instancetype)initWithClient:(PPCom*)client conversationId:(NSString*)conversationId text:(NSString*)text {
     self = [self init];
     if (self) {
-        _client = client;
-        
-        // generate a random uuid as message's id
-        _messageId = [_client.utils getRandomUUID];
-        _fromId = _client.user.uuid;
         _text = text;
-        _conversationId = conversationId;
-        _timestamp = (long)[[NSDate date] timeIntervalSince1970];
-        
-        if ([self isLargeText:text]) {
-            _type = @"TXT";
-        } else {
-            _type = @"TEXT";
-        }
-
-        // TODO
-        // generally, we should assign different `toId` by different `policy` here
-        if ( _client.appInfo != nil && _client.appInfo.appId != nil ) {
-            _toId = _client.appInfo.appId;
-        } else {
-            // TODO Refactor
-            // if goes here, this `message` is illegal yet
-            // so we can mark this `message` as un-sendable state 
-            _toId = _conversationId;
-        }
+        [self initWithClient:client conversationId:conversationId type:[self isLargeText:text]?PPMessageApiTypeTxt:PPMessageApiTypeText];
     }
     return self;
+}
+
+- (instancetype)initWithClient:(PPCom*)client conversationId:(NSString*)conversationId imageFile:(NSString*)filePath {
+    self = [self init];
+    if (self) {
+        _media= [PPPhotoMediaItem itemWithClient:_client mediaBody:@{@"orig":filePath,
+                                                                     @"mime":@"image/png"}];
+        [self initWithClient:client conversationId:conversationId type:PPMessageApiTypeImage];
+    }
+    return self;
+}
+
+
+- (void)initWithClient:(PPCom*)client conversationId:(NSString*)conversationId type:(NSString*)type {
+    _client = client;
+    _type=type;
+    // generate a random uuid as message's id
+    _messageId = [_client.utils getRandomUUID];
+    _fromId = _client.user.uuid;
+    _conversationId = conversationId;
+    _timestamp = (long)[[NSDate date] timeIntervalSince1970];
+    
+    UIImage* image;
+    // TODO
+    // generally, we should assign different `toId` by different `policy` here
+    if ( _client.appInfo != nil && _client.appInfo.appId != nil ) {
+        _toId = _client.appInfo.appId;
+    } else {
+        // TODO Refactor
+        // if goes here, this `message` is illegal yet
+        // so we can mark this `message` as un-sendable state
+        _toId = _conversationId;
+    }
 }
 
 - (JSQMessage*)getJSQMessage {

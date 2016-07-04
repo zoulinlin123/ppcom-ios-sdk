@@ -57,7 +57,6 @@
 #pragma mark - Read Methods
 
 -(NSData*)readFileToBinaryData:(NSString*)fileUrl {
-    
     //make a file name to write the data to using the documents directory:
     NSString *filePath = fileUrl;
     NSString *content = [[NSString alloc] initWithContentsOfFile:filePath
