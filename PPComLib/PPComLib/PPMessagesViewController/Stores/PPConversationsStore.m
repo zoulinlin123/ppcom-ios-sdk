@@ -199,7 +199,7 @@
 
 - (void)getAppOrgGroupsWithBlock:(PPHttpModelCompletedBlock)completedBlock {
     // Only show groups when `app_route_policy === GROUP`
-    if (![self.client.appInfo.groupPolicy isEqualToString:PPAppInfoGroupPolicyGROUP]) {
+    if (self.client.appInfo.groupPolicy!= nil && ![self.client.appInfo.groupPolicy isKindOfClass:[NSNull class]] &&  ![self.client.appInfo.groupPolicy isEqualToString:PPAppInfoGroupPolicyGROUP]) {
         if (completedBlock) {
             completedBlock([NSMutableArray array], nil, nil);
         }

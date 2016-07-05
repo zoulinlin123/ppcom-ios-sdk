@@ -13,14 +13,14 @@
 #define PP_LOCAL_DEBUG
 #ifdef PP_LOCAL_DEBUG
 
-NSString *const PPApiHost = @"http://10.1.127.148:8945/api";
-NSString *const PPFileHost = @"http://10.1.127.148:8945/download/";
-NSString *const PPWebSocketHost = @"ws://10.1.127.148:8945/pcsocket/WS";
-NSString *const PPFileUploadHost = @"http://10.1.127.148:8945/upload/upload/";
-NSString *const PPTxtUploadHost = @"http://10.1.127.148:8945/ppkefu/upload_txt";
-NSString *const PPAuthHost = @"http://10.1.127.148:8945/ppauth";
-NSString *const PPApiKey = @"Y2VmZTUwMjcwODNjNzcyNWIxZWJjNjI5NmRjNDBjYTA0ZGQ5ZTFjNQ==";
-NSString *const PPApiSecret = @"NjI1MzU0OWFlZjUwYWRjZTkxNzYyM2Y3YWU0MzhiZWFjZDQwMTI1Mw==";
+NSString *const PPApiHost = @"http://10.0.140.101:8945/api";
+NSString *const PPFileHost = @"http://10.0.140.101:8945/download/";
+NSString *const PPWebSocketHost = @"ws://10.0.140.101:8945/pcsocket/WS";
+NSString *const PPFileUploadHost = @"http://10.0.140.101:8945/upload/upload/";
+NSString *const PPTxtUploadHost = @"http://10.0.140.101:8945/ppkefu/upload_txt";
+NSString *const PPAuthHost = @"http://10.0.140.101:8945/ppauth";
+NSString *const PPApiKey = @"NDMxZjQ1NmZmMWZmY2I3NTZhZWMwZDliNjFmNTNkNWM1YjQ2YjZjNA==";
+NSString *const PPApiSecret = @"YjA4YzIzNjMzOTkyMzdlNTE0ZDkyYzMyNjNmZWEyMzQwMDk2M2QyOA==";
 
 #else
 
