@@ -51,8 +51,7 @@
 + (UIImage *)jsq_bubbleImageFromBundleWithName:(NSString *)name
 {
     NSBundle *bundle = [NSBundle jsq_messagesAssetBundle];
-//    NSString *path = [bundle pathForResource:name ofType:@"png" inDirectory:@"Images"];
-    NSString *path = [bundle pathForResource:name ofType:@"png"];
+    NSString *path = [bundle pathForResource:name ofType:@"png" inDirectory:@"Images"];
     return [UIImage imageWithContentsOfFile:path];
 }
 
@@ -101,8 +100,9 @@
     return [UIImage jsq_bubbleImageFromBundleWithName:@"play"];
 }
 
-+ (UIImage *)jsq_defaultFileAttachmentImage {
-    return [self jsq_defaultAccessoryImage];
++ (UIImage *)jsq_defaultPauseImage
+{
+    return [UIImage jsq_bubbleImageFromBundleWithName:@"pause"];
 }
 
 @end

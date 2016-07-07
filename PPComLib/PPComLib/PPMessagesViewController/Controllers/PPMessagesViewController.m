@@ -56,6 +56,9 @@ NSString *const PPVersionString = @"0.0.2";
 @property (nonatomic) PPMessagesStore *messagesStore;
 @property (nonatomic, strong) PPImagePickerDelegate* imagePickerDelegate;
 
+@property (nonatomic, strong) NSString* senderId;
+@property (nonatomic, strong) NSString* senderDisplayName;
+
 @property (nonatomic) UIBarButtonItem *groupButtonItem;
 @property (nonatomic) UIBarButtonItem *activityIndicatorButtonItem;
 
@@ -180,6 +183,8 @@ NSString *const PPVersionString = @"0.0.2";
     
     self.senderId = self.client.user.uuid;
     self.senderDisplayName = self.client.user.fullName;
+    self.collectionView.delegate=self;
+    self.collectionView.dataSource=self;
 
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
     
@@ -294,9 +299,9 @@ NSString *const PPVersionString = @"0.0.2";
         
         if ([mediaData isKindOfClass:[JSQPhotoMediaItem class]]) {
             [self loadPhotoItemData:cell mediaData:mediaData indexPath:indexPath];
-        } else if ([mediaData isKindOfClass:[JSQFileMediaItem class]]) {
+        } else if ([mediaData isKindOfClass:[JSQVideoMediaItem class]]) {
             PPMessage *ppFileMessage = self.ppMessageArray[indexPath.item];
-            JSQFileMediaItem *jsqFileItem = (JSQFileMediaItem*)mediaData;
+            JSQVideoMediaItem *jsqFileItem = (JSQVideoMediaItem*)mediaData;
             [self appliesMediaViewMaskAsOutgoing:jsqFileItem message:ppFileMessage];
         }
     }
@@ -415,11 +420,11 @@ NSString *const PPVersionString = @"0.0.2";
     JSQMessage *message = self.jsqMessageArray[indexPath.row];
     if (message.isMediaMessage) {
         id<JSQMessageMediaData> mediaData = (id<JSQMessageMediaData>)message.media;
-        if ([mediaData isKindOfClass:[JSQFileMediaItem class]]) {
+        if ([mediaData isKindOfClass:[JSQVideoMediaItem class]]) {
             if (self.delegate) {
                 if ([self.delegate respondsToSelector:@selector(onFileMessageTapped:)]) {
-                    JSQFileMediaItem *fileItem = (JSQFileMediaItem*)mediaData;
-                    [self.delegate onFileMessageTapped:fileItem.fileURL];
+                    JSQVideoMediaItem *fileItem = (JSQVideoMediaItem*)mediaData;
+                    [self.delegate onVideoFileMessageTapped:fileItem.fileURL];
                 }
             }
         } else if ([mediaData isKindOfClass:[JSQPhotoMediaItem class]]) {
@@ -519,7 +524,7 @@ NSString *const PPVersionString = @"0.0.2";
             txtMediaData.state = PPTxtMediaItemLoadStateDone;
             // 通知刷新
             JSQMessage *jsqMessage = self.jsqMessageArray[indexPath.row];
-            jsqMessage.text = content;
+//            jsqMessage.text = content;
             [self.collectionView reloadData];
         }];
     }

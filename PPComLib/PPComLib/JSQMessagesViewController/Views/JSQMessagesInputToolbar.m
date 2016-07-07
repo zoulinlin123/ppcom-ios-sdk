@@ -25,7 +25,6 @@
 #import "UIColor+JSQMessages.h"
 #import "UIImage+JSQMessages.h"
 #import "UIView+JSQMessages.h"
-#import "NSBundle+JSQMessages.h"
 
 static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesInputToolbarKeyValueObservingContext;
 
@@ -33,12 +32,6 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
 @interface JSQMessagesInputToolbar ()
 
 @property (assign, nonatomic) BOOL jsq_isObserving;
-
-- (void)jsq_leftBarButtonPressed:(UIButton *)sender;
-- (void)jsq_rightBarButtonPressed:(UIButton *)sender;
-
-- (void)jsq_addObservers;
-- (void)jsq_removeObservers;
 
 @end
 
@@ -53,8 +46,7 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
-
+    self.backgroundColor = [UIColor whiteColor];
     self.jsq_isObserving = NO;
     self.sendButtonOnRight = YES;
 
@@ -70,15 +62,16 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
 
     [self jsq_addObservers];
 
-    self.contentView.leftBarButtonItem = [JSQMessagesToolbarButtonFactory defaultAccessoryButtonItem];
-    self.contentView.rightBarButtonItem = [JSQMessagesToolbarButtonFactory defaultSendButtonItem];
+    JSQMessagesToolbarButtonFactory *toolbarButtonFactory = [[JSQMessagesToolbarButtonFactory alloc] initWithFont:[UIFont boldSystemFontOfSize:17.0]];
+    self.contentView.leftBarButtonItem = [toolbarButtonFactory defaultAccessoryButtonItem];
+    self.contentView.rightBarButtonItem = [toolbarButtonFactory defaultSendButtonItem];
 
     [self toggleSendButtonEnabled];
 }
 
 - (JSQMessagesToolbarContentView *)loadToolbarContentView
 {
-    NSArray *nibViews = [[NSBundle jsq_messagesAssetBundle] loadNibNamed:NSStringFromClass([JSQMessagesToolbarContentView class])
+    NSArray *nibViews = [[NSBundle bundleForClass:[JSQMessagesInputToolbar class]] loadNibNamed:NSStringFromClass([JSQMessagesToolbarContentView class])
                                                                                           owner:nil
                                                                                         options:nil];
     return nibViews.firstObject;
@@ -87,7 +80,6 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
 - (void)dealloc
 {
     [self jsq_removeObservers];
-    _contentView = nil;
 }
 
 #pragma mark - Setters

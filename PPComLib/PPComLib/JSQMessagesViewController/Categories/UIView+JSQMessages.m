@@ -39,11 +39,4 @@
     [self jsq_pinSubview:subview toEdge:NSLayoutAttributeTrailing];
 }
 
-+(id)autolayoutView
-{
-    UIView *view = [self new];
-    view.translatesAutoresizingMaskIntoConstraints = NO;
-    return view;
-}
-
 @end

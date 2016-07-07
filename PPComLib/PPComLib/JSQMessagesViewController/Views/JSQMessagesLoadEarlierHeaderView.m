@@ -29,8 +29,6 @@ const CGFloat kJSQMessagesLoadEarlierHeaderViewHeight = 32.0f;
 
 @property (weak, nonatomic) IBOutlet UIButton *loadButton;
 
-- (IBAction)loadButtonPressed:(UIButton *)sender;
-
 @end
 
 
@@ -42,7 +40,7 @@ const CGFloat kJSQMessagesLoadEarlierHeaderViewHeight = 32.0f;
 + (UINib *)nib
 {
     return [UINib nibWithNibName:NSStringFromClass([JSQMessagesLoadEarlierHeaderView class])
-                          bundle:[NSBundle jsq_messagesAssetBundle]];
+                          bundle:[NSBundle bundleForClass:[JSQMessagesLoadEarlierHeaderView class]]];
 }
 
 + (NSString *)headerReuseIdentifier

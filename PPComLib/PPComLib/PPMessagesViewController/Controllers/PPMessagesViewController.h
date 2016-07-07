@@ -22,7 +22,7 @@ extern NSString *const PPVersionString;
 @protocol PPMessagesViewControllerDelegate <NSObject>
 
 @optional
--(void)onFileMessageTapped:(NSURL*)fileUrl;
+-(void)onVideoFileMessageTapped:(NSURL*)fileUrl;
 -(void)onImageMessageTapped:(NSURL*)imageUrl image:(UIImage*)displayedImage;
 
 @end

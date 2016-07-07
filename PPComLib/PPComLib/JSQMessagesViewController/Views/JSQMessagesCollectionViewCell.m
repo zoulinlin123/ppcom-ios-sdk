@@ -23,8 +23,6 @@
 #import "JSQMessagesCollectionViewLayoutAttributes.h"
 
 #import "UIView+JSQMessages.h"
-#import "UIDevice+JSQMessages.h"
-#import "NSBundle+JSQMessages.h"
 
 
 static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
@@ -84,7 +82,7 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 
 + (UINib *)nib
 {
-    return [UINib nibWithNibName:NSStringFromClass([self class]) bundle:[NSBundle jsq_messagesAssetBundle]];
+    return [UINib nibWithNibName:NSStringFromClass([self class]) bundle:[NSBundle bundleForClass:[self class]]];
 }
 
 + (NSString *)cellReuseIdentifier
@@ -213,29 +211,17 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 - (void)setHighlighted:(BOOL)highlighted
 {
     [super setHighlighted:highlighted];
+    self.avatarImageView.highlighted = highlighted;
     self.messageBubbleImageView.highlighted = highlighted;
 }
 
 - (void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];
+    self.avatarImageView.highlighted = selected;
     self.messageBubbleImageView.highlighted = selected;
 }
 
-//  FIXME: radar 18326340
-//         remove when fixed
-//         hack for Xcode6 / iOS 8 SDK rendering bug that occurs on iOS 7.x
-//         see issue #484
-//         https://github.com/jessesquires/JSQMessagesViewController/issues/484
-//
-- (void)setBounds:(CGRect)bounds
-{
-    [super setBounds:bounds];
-
-    if ([UIDevice jsq_isCurrentDeviceBeforeiOS8]) {
-        self.contentView.frame = bounds;
-    }
-}
 
 #pragma mark - Menu actions
 
@@ -246,6 +232,22 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
     }
 
     return [super respondsToSelector:aSelector];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    // do nothing
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    // do nothing
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    // do nothing
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    // do nothing
 }
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation
@@ -384,7 +386,7 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
         return CGRectContainsPoint(self.messageBubbleContainerView.frame, touchPt);
     }
     
-    return YES;
+    return NO;
 }
 
 @end

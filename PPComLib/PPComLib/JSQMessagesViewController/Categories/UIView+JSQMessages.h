@@ -18,6 +18,8 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIView (JSQMessages)
 
 /**
@@ -35,6 +37,6 @@
  */
 - (void)jsq_pinAllEdgesOfSubview:(UIView *)subview;
 
-+(id)autolayoutView;
-
 @end
+
+NS_ASSUME_NONNULL_END

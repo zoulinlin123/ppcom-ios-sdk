@@ -18,6 +18,8 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIImage (JSQMessages)
 
 /**
@@ -52,7 +54,7 @@
 /**
  *  @return The compact message bubble image. 
  *
- *  @disscussion This is the default bubble image used by `JSQMessagesBubbleImageFactory`.
+ *  @discussion This is the default bubble image used by `JSQMessagesBubbleImageFactory`.
  */
 + (UIImage *)jsq_bubbleCompactImage;
 
@@ -77,8 +79,10 @@
 + (UIImage *)jsq_defaultPlayImage;
 
 /**
- * 文件附件Image
+ *  @return The default pause icon image.
  */
-+ (UIImage *)jsq_defaultFileAttachmentImage;
++ (UIImage *)jsq_defaultPauseImage;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -30,8 +30,7 @@
 -(JSQMessagesAvatarImage*)defaultAvatarImage {
     if (!_defaultAvatarImage) {
         UIImage *image = [UIImage imageNamed:@"PPComLib.bundle/pp_icon_avatar"];
-        _defaultAvatarImage = [JSQMessagesAvatarImageFactory avatarImageWithImage:image
-                                                                             diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+        _defaultAvatarImage = [[JSQMessagesAvatarImageFactory new] avatarImageWithPlaceholder:image];
     }
     return _defaultAvatarImage;
 }
@@ -61,7 +60,7 @@
     if (url) {
         [self startDownload:url.absoluteString completionHandler:^(UIImage *image) {
             if (image != nil) {
-                JSQMessagesAvatarImage *avatarImage = [JSQMessagesAvatarImageFactory avatarImageWithImage:image diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+                JSQMessagesAvatarImage *avatarImage = [[JSQMessagesAvatarImageFactory new] avatarImageWithImage:image];
                 self.avatarDict[userUuid] = avatarImage;
             } else {
                 self.avatarDict[userUuid] = self.defaultAvatarImage;

@@ -186,7 +186,7 @@ NSString *const PPMessageApiTypeAudio = @"AUDIO";
             _jsqMessage = [[JSQMessage alloc] initWithSenderId:self.fromId senderDisplayName:self.client.user.fullName date:[self.client.utils timestampToDate:self.timestamp]  text:self.text];
         } else if ([_type isEqualToString:@"FILE"]) {
             PPFileMediaItem *fileMediaItem = (PPFileMediaItem*)[self getFileMediaItem];
-            JSQFileMediaItem *fileItem = [[JSQFileMediaItem alloc] initWithFileURL:[NSURL URLWithString:fileMediaItem.furl] displayName:fileMediaItem.fname];
+            JSQVideoMediaItem *fileItem = [[JSQVideoMediaItem alloc] initWithFileURL:[NSURL URLWithString:fileMediaItem.furl] isReadyToPlay:false];
             fileItem.appliesMediaViewMaskAsOutgoing = [self.fromId isEqual:self.client.user.uuid];
             JSQMessage *fileMessage = [JSQMessage messageWithSenderId:self.fromId displayName:self.client.user.fullName media:fileItem];
             _jsqMessage = fileMessage;

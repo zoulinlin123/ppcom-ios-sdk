@@ -19,19 +19,18 @@
 #import "NSBundle+JSQMessages.h"
 
 #import "JSQMessagesViewController.h"
-#import "PPMessagesViewController.h"
 
 @implementation NSBundle (JSQMessages)
 
 + (NSBundle *)jsq_messagesBundle
 {
-    return [NSBundle bundleForClass:[PPMessagesViewController class]];
+    return [NSBundle bundleForClass:[JSQMessagesViewController class]];
 }
 
 + (NSBundle *)jsq_messagesAssetBundle
 {
     NSString *bundleResourcePath = [NSBundle jsq_messagesBundle].resourcePath;
-    NSString *assetPath = [bundleResourcePath stringByAppendingPathComponent:@"PPComLib.bundle"];
+    NSString *assetPath = [bundleResourcePath stringByAppendingPathComponent:@"JSQMessagesAssets.bundle"];
     return [NSBundle bundleWithPath:assetPath];
 }
 

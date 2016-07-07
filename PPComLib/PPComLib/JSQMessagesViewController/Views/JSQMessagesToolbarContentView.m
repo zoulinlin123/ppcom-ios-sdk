@@ -19,7 +19,6 @@
 #import "JSQMessagesToolbarContentView.h"
 
 #import "UIView+JSQMessages.h"
-#import "NSBundle+JSQMessages.h"
 
 const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 
@@ -48,7 +47,7 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 + (UINib *)nib
 {
     return [UINib nibWithNibName:NSStringFromClass([JSQMessagesToolbarContentView class])
-                          bundle:[NSBundle jsq_messagesAssetBundle]];
+                          bundle:[NSBundle bundleForClass:[JSQMessagesToolbarContentView class]]];
 }
 
 #pragma mark - Initialization
@@ -63,15 +62,6 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
     self.rightHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
 
     self.backgroundColor = [UIColor clearColor];
-}
-
-- (void)dealloc
-{
-    _textView = nil;
-    _leftBarButtonItem = nil;
-    _rightBarButtonItem = nil;
-    _leftBarButtonContainerView = nil;
-    _rightBarButtonContainerView = nil;
 }
 
 #pragma mark - Setters
