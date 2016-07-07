@@ -29,7 +29,7 @@
 
 -(JSQMessagesAvatarImage*)defaultAvatarImage {
     if (!_defaultAvatarImage) {
-        UIImage *image = [UIImage imageNamed:@"PPComLib.bundle/pp_icon_avatar"];
+        UIImage *image = [UIImage imageNamed:@"Frameworks/PPCom.framework/pp_icon_avatar"];
         _defaultAvatarImage = [[JSQMessagesAvatarImageFactory new] avatarImageWithPlaceholder:image];
     }
     return _defaultAvatarImage;

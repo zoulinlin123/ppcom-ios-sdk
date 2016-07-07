@@ -86,7 +86,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		180C36041D2E5B3A00986C0B /* PPComLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PPComLib.framework; path = "Build/Products/Debug-iphoneos/PPComLib.framework"; sourceTree = "<group>"; };
 		3541F9CD1BCE08B7000940EA /* PPComDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPComDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3541F9D11BCE08B7000940EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3541F9D21BCE08B7000940EA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -102,7 +101,6 @@
 		3541F9F81BCE09AF000940EA /* FeedbackMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackMessagesViewController.h; sourceTree = "<group>"; };
 		3541F9F91BCE09AF000940EA /* FeedbackMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackMessagesViewController.m; sourceTree = "<group>"; };
 		3541F9FC1BCE09AF000940EA /* PPDemo.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PPDemo.storyboard; sourceTree = "<group>"; };
-		EDAC3D361CACF80600BA1066 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		EDBB0A941CC9C9FA00E79F04 /* PPComLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PPComLib.xcodeproj; path = ../../PPComLib/PPComLib.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,8 +126,6 @@
 		3541F9C41BCE08B7000940EA = {
 			isa = PBXGroup;
 			children = (
-				180C36041D2E5B3A00986C0B /* PPComLib.framework */,
-				EDAC3D361CACF80600BA1066 /* libicucore.tbd */,
 				3541F9CF1BCE08B7000940EA /* PPComDemo */,
 				3541F9E91BCE08B8000940EA /* PPComDemoTests */,
 				3541F9CE1BCE08B7000940EA /* Products */,
