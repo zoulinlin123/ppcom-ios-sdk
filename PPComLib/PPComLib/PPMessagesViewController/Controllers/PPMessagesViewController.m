@@ -333,7 +333,7 @@ NSString *const PPVersionString = @"0.0.2";
         image = [self scaleImage:image toScale:scale];
     }
     //JEPG格式
-    NSData *imagedata=UIImageJPEGRepresentation(image,1.0);
+    NSData *imagedata=UIImageJPEGRepresentation(image,0.6);
     
     NSArray*paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     NSString *documentsDirectory=[paths objectAtIndex:0];
