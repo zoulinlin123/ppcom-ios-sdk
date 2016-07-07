@@ -14,7 +14,7 @@
 #ifdef PP_LOCAL_DEBUG
 
 NSString *const PPApiHost = @"http://10.0.140.101:8945/api";
-NSString *const PPFileHost = @"http://10.0.140.101:8945/download/";
+NSString *const PPFileHost = @"http://10.0.140.101:8945/download/download/";
 NSString *const PPWebSocketHost = @"ws://10.0.140.101:8945/pcsocket/WS";
 NSString *const PPFileUploadHost = @"http://10.0.140.101:8945/upload/upload/";
 NSString *const PPTxtUploadHost = @"http://10.0.140.101:8945/ppkefu/upload_txt";
