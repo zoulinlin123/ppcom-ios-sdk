@@ -93,9 +93,7 @@
     
     // 1. get app orggroup
     [self getAppOrgGroupsWithBlock:^(id obj, NSDictionary *response, NSError *error) {
-        
         NSMutableArray *conversations = obj ? obj : self.conversationItems;
-        
         // 2. get conversations
         PPGetConversationListHttpModel *getConversationsTask = [PPGetConversationListHttpModel modelWithClient:self.client];
         [getConversationsTask getConversationListWithBlock:^(id obj, NSDictionary *response, NSError *error) {
@@ -110,9 +108,7 @@
             if (block) block([self sortedConversations], error);
             
         }];
-        
     }];
-    
 }
 
 - (void)updateConversationsWithMessage:(PPMessage *)message {

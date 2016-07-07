@@ -83,9 +83,7 @@
 //         get messageList associated with `conversationId`
         PPMessageList *messageList = [self messagesInCovnersation:conversationId autoCreate:YES];
         [messageList updateMessageIdSetWith:messageId];
-        
     }
-    
 }
 
 - (NSString*)description {

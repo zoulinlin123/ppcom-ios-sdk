@@ -340,7 +340,6 @@
                 } else {
                     [self handleError:error with:nil];
                 }
-                
             }];
             
         } else {

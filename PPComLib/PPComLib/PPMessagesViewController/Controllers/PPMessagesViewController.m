@@ -221,7 +221,6 @@ NSString *const PPVersionString = @"0.0.2";
 }
 
 #pragma mark - JSQMessageDataSource
-
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     return self.jsqMessageArray[indexPath.item];
 }
@@ -261,7 +260,6 @@ NSString *const PPVersionString = @"0.0.2";
 }
 
 #pragma mark - UICollectionView DataSource
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.jsqMessageArray.count;
 }
@@ -299,9 +297,7 @@ NSString *const PPVersionString = @"0.0.2";
         } else if ([mediaData isKindOfClass:[JSQFileMediaItem class]]) {
             PPMessage *ppFileMessage = self.ppMessageArray[indexPath.item];
             JSQFileMediaItem *jsqFileItem = (JSQFileMediaItem*)mediaData;
-            
             [self appliesMediaViewMaskAsOutgoing:jsqFileItem message:ppFileMessage];
-
         }
     }
     
@@ -331,13 +327,18 @@ NSString *const PPVersionString = @"0.0.2";
 }
 
 -(void)sendImage:(UIImage*)image {
+    float maxVal =MAX(image.size.width, image.size.height);
+    if (maxVal > 800) {
+        float scale = 800.0 / maxVal;
+        image = [self scaleImage:image toScale:scale];
+    }
     //JEPG格式
     NSData *imagedata=UIImageJPEGRepresentation(image,1.0);
     
     NSArray*paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     NSString *documentsDirectory=[paths objectAtIndex:0];
     
-    NSString *savedImagePath=[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.png",[[NSDate date] timeIntervalSince1970]]];
+    NSString *savedImagePath=[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.jpg",[[NSDate date] timeIntervalSince1970]]];
     
     [imagedata writeToFile:savedImagePath atomically:YES];
     //首先在界面上显示出来消息
@@ -355,7 +356,14 @@ NSString *const PPVersionString = @"0.0.2";
 
 }
 
-
+- (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
+{
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width * scaleSize, image.size.height * scaleSize));
+    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height * scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+}
 
 - (void)didPressAccessoryButton:(UIButton *)sender
 {
@@ -364,7 +372,6 @@ NSString *const PPVersionString = @"0.0.2";
                                               cancelButtonTitle:@"Cancel"
                                          destructiveButtonTitle:nil
                                               otherButtonTitles:@"Photo Library", @"Take Photo", nil];
-    
     [sheet showFromToolbar:self.inputToolbar];
 }
 
@@ -423,7 +430,6 @@ NSString *const PPVersionString = @"0.0.2";
                     
                     JSQMessage *jsqMessage = self.jsqMessageArray[indexPath.row];
                     JSQPhotoMediaItem *jsqPhotoItem = (JSQPhotoMediaItem*)jsqMessage.media;
-                    
                     [self.delegate onImageMessageTapped:[NSURL URLWithString:photoItem.furl] image:jsqPhotoItem.image];
                 }
             }
@@ -480,11 +486,10 @@ NSString *const PPVersionString = @"0.0.2";
     }
     
     PPPhotoMediaItem *ppPhotoMediaItem = (PPPhotoMediaItem*)ppMessage.media;
-//    if (ppPhotoMediaItem.fid != nil) {
-//        mediaItem.image= [UIImage imageWithContentsOfFile:ppPhotoMediaItem.fid];
-//        [self.collectionView reloadData];
-//        return;
-//    }
+    if (ppPhotoMediaItem.fid != nil && [ppPhotoMediaItem.fid hasPrefix:@"file://"]) {
+        mediaItem.image= [UIImage imageWithContentsOfFile:[ppPhotoMediaItem.fid substringFromIndex:@"file://".length]];
+        return;
+    }
     
     ImageDownloader *downloader = self.imageDownloadsInProgress[indexPath];
     if (downloader == nil) {
@@ -493,8 +498,10 @@ NSString *const PPVersionString = @"0.0.2";
     }
     
     [downloader startDownload:ppPhotoMediaItem.furl completionHandler:^(UIImage *image) {
-        mediaItem.image = image;
-        [self.collectionView reloadData];
+        if (image != nil) {
+            mediaItem.image = image;
+            [self.collectionView reloadData];
+        }
     }];
 }
 

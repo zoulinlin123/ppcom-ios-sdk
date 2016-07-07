@@ -104,7 +104,7 @@
 
 -(void)sendImageMessage:(NSMutableDictionary *)basicParams message:(PPMessage *)message complectionHandler:(void (^)(NSError *, NSDictionary *))handler {
     PPPhotoMediaItem* imageItem = (PPPhotoMediaItem*)message.media;
-    [self.client.uploader uploadFile:imageItem.fid fromUserId:self.client.user.uuid withDelegate:^(NSError *error, NSDictionary *response) {
+    [self.client.uploader uploadFile:[imageItem.fid substringFromIndex:@"file://".length] fromUserId:self.client.user.uuid withDelegate:^(NSError *error, NSDictionary *response) {
         if (response == nil) {
             return;
         }
@@ -112,7 +112,7 @@
         NSString *fid = response[@"fuuid"];
         imageItem.fid=fid;
         NSDictionary *fidParams = @{@"fid":fid,
-                                    @"mime":@"image/jpeg"};
+                                    @"mime":@"image/png"};
         
         basicParams[@"message_body"] = [self.client.utils dictionaryToJsonString:fidParams];
         [self.client.api sendMessage:basicParams completionHandler:^(NSDictionary *response, NSError *error) {

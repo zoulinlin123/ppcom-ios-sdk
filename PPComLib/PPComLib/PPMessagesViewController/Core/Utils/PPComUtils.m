@@ -79,7 +79,7 @@ static NSDateFormatter *PPDateFormatter = nil;
 
 BOOL pp_validateUrl(NSString *candidate) {
     NSString *urlRegEx =
-    @"^(http|https)://.*";
+    @"^(file|http|https)://.*";
     NSPredicate *urlTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegEx];
     return [urlTest evaluateWithObject:candidate];
 }

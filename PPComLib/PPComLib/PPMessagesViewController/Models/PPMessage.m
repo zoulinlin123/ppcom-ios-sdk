@@ -142,8 +142,7 @@ NSString *const PPMessageApiTypeAudio = @"AUDIO";
 - (instancetype)initWithClient:(PPCom*)client conversationId:(NSString*)conversationId imageFile:(NSString*)filePath {
     self = [self init];
     if (self) {
-        _media= [PPPhotoMediaItem itemWithClient:_client mediaBody:@{@"orig":filePath,
-                                                                     @"mime":@"image/png"}];
+        _media= [PPPhotoMediaItem itemWithClient:_client mediaBody:@{@"orig":[NSString stringWithFormat:@"file://%@",filePath], @"mime":[filePath hasSuffix:@"png"]?@"image/png":@"image/jpg"}];
         [self initWithClient:client conversationId:conversationId type:PPMessageApiTypeImage];
     }
     return self;

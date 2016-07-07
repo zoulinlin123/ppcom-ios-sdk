@@ -249,7 +249,6 @@
 }
 
 #pragma mark - getter setter
-
 - (PPLoadingView*)loadingView {
     if (!_loadingView) {
         _loadingView = [[PPLoadingView alloc] init];
@@ -257,7 +256,5 @@
     }
     return _loadingView;
 }
-
 #pragma mark - helper
-
 @end
