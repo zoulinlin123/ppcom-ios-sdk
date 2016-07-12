@@ -252,13 +252,17 @@ NSString *const PPVersionString = @"0.0.2";
     NSString *userUuid = ppMessage.fromId;
     
     PPJSQAvatarLoader *jsqAvatarLoader = self.client.jsqAvatarLoader;
-    JSQMessagesAvatarImage *existAvatarImage = [jsqAvatarLoader getJSQAvatarImage:userUuid withImageUrlString:imageUrl];
-    if (!existAvatarImage) {
-        existAvatarImage = jsqAvatarLoader.defaultAvatarImage;
-        __weak PPMessagesViewController *wself = self;
-        [jsqAvatarLoader loadJSQAvatarImage:ppMessage.fromId withImageUrlString:imageUrl completed:^(JSQMessagesAvatarImage *jsqImage) {
-            [wself.collectionView reloadData];
-        }];
+    JSQMessagesAvatarImage *existAvatarImage = nil;
+    
+    if (imageUrl != nil) {
+        existAvatarImage=[jsqAvatarLoader getJSQAvatarImage:userUuid withImageUrlString:imageUrl];
+        if (!existAvatarImage) {
+            existAvatarImage = jsqAvatarLoader.defaultAvatarImage;
+            __weak PPMessagesViewController *wself = self;
+            [jsqAvatarLoader loadJSQAvatarImage:ppMessage.fromId withImageUrlString:imageUrl completed:^(JSQMessagesAvatarImage *jsqImage) {
+                [wself.collectionView reloadData];
+            }];
+        }
     }
     
     return existAvatarImage;
@@ -326,7 +330,7 @@ NSString *const PPVersionString = @"0.0.2";
     self.ppMessageArray = messageList.ppMessageArray;
     
     [self finishSendingMessageAnimated:YES];
-    
+    [self.collectionView.collectionViewLayout setItemSize:CGSizeMake(200, 200)];
     //发送消息
     [self sendMessage:textMessage];
 }
@@ -343,7 +347,7 @@ NSString *const PPVersionString = @"0.0.2";
     NSArray*paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     NSString *documentsDirectory=[paths objectAtIndex:0];
     
-    NSString *savedImagePath=[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.jpg",[[NSDate date] timeIntervalSince1970]]];
+    NSString *savedImagePath=[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%f.jpg",[[NSDate date] timeIntervalSince1970]]];
     
     [imagedata writeToFile:savedImagePath atomically:YES];
     //首先在界面上显示出来消息
@@ -524,7 +528,7 @@ NSString *const PPVersionString = @"0.0.2";
             txtMediaData.state = PPTxtMediaItemLoadStateDone;
             // 通知刷新
             JSQMessage *jsqMessage = self.jsqMessageArray[indexPath.row];
-//            jsqMessage.text = content;
+            self.jsqMessageArray[indexPath.row]=[JSQMessage messageWithSenderId:jsqMessage.senderId displayName:jsqMessage.senderDisplayName text:content];
             [self.collectionView reloadData];
         }];
     }
@@ -588,7 +592,6 @@ NSString *const PPVersionString = @"0.0.2";
 - (BOOL) startCameraControllerFromViewController: (UIViewController*) controller
                                    usingDelegate: (id <UIImagePickerControllerDelegate,
                                                    UINavigationControllerDelegate>) delegate {
-    
     if (([UIImagePickerController isSourceTypeAvailable:
                                       UIImagePickerControllerSourceTypeCamera] == NO)
         || (delegate == nil)

@@ -9,7 +9,6 @@
 #import "DemoTableViewController.h"
 #import "FeedbackMessagesViewController.h"
 
-#import <PPComLib/PPComLib.h>
 
 @interface DemoTableViewController ()<FeedbackMessagesViewControllerDelegate>
 @end

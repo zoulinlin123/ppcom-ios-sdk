@@ -24,8 +24,7 @@
 
     if (self.delegateModal) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
-                                                                                              target:self
-                                                                                              action:@selector(onClosePressed:)];
+                                                                            target:self                                      action:@selector(onClosePressed:)];
     }
 
     // set title

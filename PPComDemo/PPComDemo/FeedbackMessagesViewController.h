@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Yvertical. All rights reserved.
 //
 
-#import <PPComLib/PPComLib.h>
+#import <PPCom/PPConversationsViewController.h>
 
 @class FeedbackMessagesViewController;
 

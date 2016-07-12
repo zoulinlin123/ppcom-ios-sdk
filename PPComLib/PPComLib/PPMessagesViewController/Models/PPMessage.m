@@ -158,7 +158,6 @@ NSString *const PPMessageApiTypeAudio = @"AUDIO";
     _conversationId = conversationId;
     _timestamp = (long)[[NSDate date] timeIntervalSince1970];
     
-    UIImage* image;
     // TODO
     // generally, we should assign different `toId` by different `policy` here
     if ( _client.appInfo != nil && _client.appInfo.appId != nil ) {
