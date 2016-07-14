@@ -254,16 +254,17 @@ NSString *const PPVersionString = @"0.0.2";
     PPJSQAvatarLoader *jsqAvatarLoader = self.client.jsqAvatarLoader;
     JSQMessagesAvatarImage *existAvatarImage = nil;
     
-    if (imageUrl != nil) {
-        existAvatarImage=[jsqAvatarLoader getJSQAvatarImage:userUuid withImageUrlString:imageUrl];
-        if (!existAvatarImage) {
-            existAvatarImage = jsqAvatarLoader.defaultAvatarImage;
+    existAvatarImage=[jsqAvatarLoader getJSQAvatarImage:userUuid withImageUrlString:imageUrl];
+    if (!existAvatarImage) {
+        existAvatarImage = jsqAvatarLoader.defaultAvatarImage;
+        if (imageUrl!= nil) {
             __weak PPMessagesViewController *wself = self;
             [jsqAvatarLoader loadJSQAvatarImage:ppMessage.fromId withImageUrlString:imageUrl completed:^(JSQMessagesAvatarImage *jsqImage) {
                 [wself.collectionView reloadData];
             }];
         }
     }
+    
     
     return existAvatarImage;
 }
